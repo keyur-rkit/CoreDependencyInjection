@@ -2,23 +2,26 @@
 
 namespace DependencyInjection.Services
 {
+    /// <summary>
+    /// Provides an in-memory implementation of the <see cref="IBookService"/> interface.
+    /// </summary>
     public class InMemoryService : IBookService
     {
-        private readonly Guid _guid;
+        #region Methods
 
-        public InMemoryService(GuidGenerationService guidService)
-        {
-            _guid = guidService.GetGuid();  // Each InMemoryService instance uses the same GUID from Singleton.
-        }
+        /// <summary>
+        /// Retrieves all books from the in-memory collection.
+        /// </summary>
+        /// <returns>A list of <see cref="Book"/> objects.</returns>
         public IEnumerable<Book> GetAllBooks()
         {
             return new List<Book>
             {
-            new Book { Id = 1, Title = "InMemory Book 1", Author = "InMemory Author" },
-            new Book { Id = 2, Title = "InMemory Book 2", Author = "InMemory Author" }
+                new Book { Id = 1, Title = "InMemory Book 1", Author = "InMemory Author" },
+                new Book { Id = 2, Title = "InMemory Book 2", Author = "InMemory Author" }
             };
         }
 
-        public Guid GetGuid() => _guid;
+        #endregion
     }
 }

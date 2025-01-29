@@ -1,3 +1,4 @@
+using DependencyInjection.Extensions;
 using DependencyInjection.Services;
 
 namespace DependencyInjection
@@ -12,10 +13,8 @@ namespace DependencyInjection
             builder.Services.AddScoped<IScopedService,ScopedService>();
             builder.Services.AddSingleton<ISingletonService,SingletonService>();
 
-            // Register services with appropriate lifetimes
-            builder.Services.AddSingleton<IGuidGenerationService, GuidGenerationService>();  // Singleton service
-            builder.Services.AddScoped<IBookService, DatabaseService>();  // Scoped service
-            //builder.Services.AddTransient<IBookService, InMemoryService>();  // Transient service
+            // register book services using Extension Methods 
+            builder.Services.AddBookServices();
 
             // Add services to the container.
 
@@ -27,7 +26,7 @@ namespace DependencyInjection
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())    
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();

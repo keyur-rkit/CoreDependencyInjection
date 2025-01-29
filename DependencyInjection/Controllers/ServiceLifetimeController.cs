@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DependencyInjection.Controllers
 {
+    /// <summary>
+    /// Controller to demonstrate service lifetimes (Transient, Scoped, Singleton).
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ServiceLifetimeController : ControllerBase
@@ -15,6 +18,15 @@ namespace DependencyInjection.Controllers
         private readonly ISingletonService _singletonService1;
         private readonly ISingletonService _singletonService2;
 
+        /// <summary>
+        /// Initializes the controller with services.
+        /// </summary>
+        /// <param name="transientService1"></param>
+        /// <param name="transientService2"></param>
+        /// <param name="singletonService1"></param>
+        /// <param name="singletonService2"></param>
+        /// <param name="scopedService1"></param>
+        /// <param name="scopedService2"></param>
         public ServiceLifetimeController(
             ITransientService transientService1,
             ITransientService transientService2,
@@ -31,6 +43,10 @@ namespace DependencyInjection.Controllers
             _scopedService2 = scopedService2;
         }
 
+        /// <summary>
+        /// Gets operation IDs for Transient services.
+        /// </summary>
+        /// <returns>Ok response with 2 instance Id</returns>
         [HttpGet("Transient")]
         public IActionResult GetTransientOperationId()
         {
@@ -39,9 +55,13 @@ namespace DependencyInjection.Controllers
                 Instance1 = _transientService1.GetOperationId(),
                 Instance2 = _transientService2.GetOperationId()
             };
-           return Ok(transient);
+            return Ok(transient);
         }
 
+        /// <summary>
+        /// Gets operation IDs for Scoped services.
+        /// </summary>
+        /// <returns>Ok response with 2 instance Id</returns>
         [HttpGet("Scoped")]
         public IActionResult GetScopedOperationId()
         {
@@ -53,6 +73,10 @@ namespace DependencyInjection.Controllers
             return Ok(scoped);
         }
 
+        /// <summary>
+        /// Gets operation IDs for Singleton services.
+        /// </summary>
+        /// <returns>Ok response with 2 instance Id</returns>
         [HttpGet("Singleton")]
         public IActionResult GetSingletonOperationId()
         {
